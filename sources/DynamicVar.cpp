@@ -58,7 +58,7 @@ void DynamicVar::setInt(int value)
 
 int64_t DynamicVar::getInt64(function<void()> onError)
 {
-    int ret = 0;
+    int64_t ret = 0;
     try
     {
         ret = std::stoll(__data, nullptr);

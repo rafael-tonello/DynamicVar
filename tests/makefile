@@ -8,8 +8,8 @@ PROJ_NAME=tests
 CUSTOM_INCLUDE_PATH = -I"./sources"
 
 #main app includes
-CUSTOM_INCLUDE_PATH += -I"../sources
-CUSTOM_INCLUDE_PATH += -I"../sources/Shared/Misc"
+CUSTOM_INCLUDE_PATH += -I"../sources"
+CUSTOM_INCLUDE_PATH += -I"../sources/common/libs.json_maker/sources"
 
 
 
@@ -18,7 +18,7 @@ C_SOURCE=$(wildcard ./sources/*.cpp)
 
 #main app files
 C_SOURCE+=$(wildcard ../sources/*.cpp)
-C_SOURCE+=$(wildcard ../sources/Shared/Misc/*.cpp)
+C_SOURCE+=$(wildcard ../sources/common/libs.json_maker/sources/*.cpp)
   
 # .h files
 #test app files
@@ -26,14 +26,14 @@ H_SOURCE=$(wildcard ./sources/*.h)
 
 #main app files
 H_SOURCE+=$(wildcard ../sources//*.h)
-H_SOURCE+=$(wildcard ../sources/Shared/Misc/*.h)
+H_SOURCE+=$(wildcard ../sources/common/json_maker/sources/*.h)
 
 objFolder:
 	@ mkdir -p objects/tests/
 
 #	the main app directories
-	@ mkdir -p objects/main/Shared/Misc
-	
+	@ mkdir -p objects/main/common/libs.json_maker/sources
+			   
 
 prebuild:
 # 	prepares the folder built/gui. This folder contains files copied from GUI/resources. These files contains the HTML5 User interface.

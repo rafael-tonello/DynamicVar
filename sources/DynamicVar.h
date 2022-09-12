@@ -61,6 +61,7 @@ class DynamicVar{
 
         operator string(){return getString(); }
         operator int(){return getInt(); }
+        operator int64_t(){return getInt64(); }
         operator double(){return getDouble();}
         operator bool(){return getBool(); }
         operator const char*(){return getString().c_str(); }
