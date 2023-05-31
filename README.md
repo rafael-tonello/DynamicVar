@@ -43,7 +43,7 @@ void setBool(bool value);
 JsonMaker::JSON getJson(function<void()> onError = [](){});
 ```
 
-Excluding the 'getString' function, all other calls to get functions can result in internal conversion errors. For these cases, you can specify a lambda function to be notified. Also, if an internal error occurs, the function will return a default value (0 for numbers, false for boolean and an empty JSON object for json).
+Excluding the 'getString' function, all other calls to get functions can result in internal conversion errors. For these cases, you can specify an anonymous function to be notified. Also, if an internal error occurs, the function will return a default value (0 for numbers, false for boolean and an empty JSON object for json).
 
 # Usage examples 
 
@@ -95,7 +95,7 @@ DynamicVar tmp1 = 10;
 DynamicVar tmp2 = "11";
 DynamicVar tmp3 = 12.0;
 
-cout << "The value of tmp1 is " << tmp1.getValue().getString() << endl;
-cout << "The value of tmp2 is " << tmp2.getValue().getString() << endl;
-cout << "The value of tmp3 is " << tmp3.getValue().getString() << endl;
+cout << "The value of tmp1 is " << tmp1.getString() << endl;
+cout << "The value of tmp2 is " << tmp2.getString() << endl;
+cout << "The value of tmp3 is " << tmp3.getString() << endl;
 ```
