@@ -20,6 +20,11 @@ DynamicVar::DynamicVar(int value)
     setInt(value);
 }
 
+DynamicVar::DynamicVar(uint value)
+{
+    setUint(value);
+}
+
 DynamicVar::DynamicVar(double value)
 {
     setDouble(value);
@@ -33,6 +38,11 @@ DynamicVar::DynamicVar(bool value)
 DynamicVar::DynamicVar(int64_t value)
 {
     setInt64(value);
+}
+
+DynamicVar::DynamicVar(uint64_t value)
+{
+    setUint64(value);
 }
 
 
@@ -56,6 +66,26 @@ void DynamicVar::setInt(int value)
     __data = std::to_string(value);
 }
 
+uint DynamicVar::getUint(function<void()> onError)
+{
+    uint ret = 0;
+    try
+    {
+        ret = (uint)(std::stoul(__data, nullptr));
+    }
+    catch(...)
+    {
+        onError();
+    }
+    return ret;
+}
+
+void DynamicVar::setUint(uint value)
+{
+    setOriginalType<uint>();
+    __data = std::to_string(value);
+}
+
 int64_t DynamicVar::getInt64(function<void()> onError)
 {
     int64_t ret = 0;
@@ -73,6 +103,26 @@ int64_t DynamicVar::getInt64(function<void()> onError)
 void DynamicVar::setInt64(int64_t value)
 {
     setOriginalType<int64_t>();
+    __data = std::to_string(value);
+}
+
+uint64_t DynamicVar::getUint64(function<void()> onError)
+{
+    uint64_t ret = 0;
+    try
+    {
+        ret = std::stoull(__data, nullptr);
+    }
+    catch(...)
+    {
+        onError();
+    }
+    return ret;
+}
+
+void DynamicVar::setUint64(uint64_t value)
+{
+    setOriginalType<uint64_t>();
     __data = std::to_string(value);
 }
 

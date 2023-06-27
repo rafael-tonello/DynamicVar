@@ -24,9 +24,11 @@ class DynamicVar{
         DynamicVar(char const *value);
         DynamicVar(string value);
         DynamicVar(int value);
+        DynamicVar(uint value);
         DynamicVar(double value);
         DynamicVar(bool value);
         DynamicVar(int64_t value);
+        DynamicVar(uint64_t value);
         
 
         template<typename T>
@@ -37,8 +39,14 @@ class DynamicVar{
         int getInt(function<void()> onError = [](){});
         void setInt(int value);
 
+        uint getUint(function<void()> onError = [](){});
+        void setUint(uint value);
+
         int64_t getInt64(function<void()> onError = [](){});
         void setInt64(int64_t value);
+
+        uint64_t getUint64(function<void()> onError = [](){});
+        void setUint64(uint64_t value);
 
         double getDouble(function<void()> onError = [](){});
         void setDouble(double value);
@@ -61,10 +69,13 @@ class DynamicVar{
 
         operator string(){return getString(); }
         operator int(){return getInt(); }
+        operator uint(){return getUint(); }
         operator int64_t(){return getInt64(); }
+        operator uint64_t(){return getUint64(); }
         operator double(){return getDouble();}
         operator bool(){return getBool(); }
         operator const char*(){return getString().c_str(); }
         operator signed long long(){ return getInt64(); }
+        operator unsigned long long(){ return getUint64(); }
 };
 #endif
