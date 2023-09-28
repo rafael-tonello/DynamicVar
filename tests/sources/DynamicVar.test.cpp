@@ -17,6 +17,8 @@ void DynamicVarTests::run(string context)
     testGets();
     testSetUsingAttribuitions();
     testGetUsingAttribuitions();
+    testPointers();
+    testeSerializable();
 }
 
 void DynamicVarTests::testConstructors()
@@ -463,4 +465,114 @@ void DynamicVarTests::testGetUsingAttribuitions()
         return received == true;
     });
 
+}
+
+void DynamicVarTests::testPointers()
+{
+    class MyClass{  
+    public:
+        string tmp;
+        string getTmp(){
+            return tmp;
+        }
+
+    };
+
+    this->test("Create object and save pointer inside DynamicVar", [](){
+        DynamicVar tmp;
+
+        tmp.setPointer<MyClass>(new MyClass());
+
+        tmp.getPointer<MyClass>()->tmp = "Sample text";
+        return tmp.getPointer<MyClass>()->getTmp() == "Sample text";
+    });
+
+    this->test("Get object pointer using direct attribuition", [](){
+        DynamicVar tmp;
+
+        tmp.setPointer<MyClass>(new MyClass());
+        tmp.getPointer<MyClass>()->tmp = "Sample text";
+
+
+        //direct attribuition
+        MyClass *myObject = tmp;
+
+        return myObject->getTmp() == "Sample text";
+    });
+}
+
+void DynamicVarTests::testeSerializable()
+{
+    class MyClass: public DynamicVar::ISerializable{  
+    public:
+        string prop1;
+        int prop2;
+
+        string serialize(){
+            return prop1 + ";" +to_string(prop2);
+        }
+
+        void deserialize(string data){
+            if (auto pos = data.find(";"); pos != string::npos)
+            {
+                this->prop1 = data.substr(0, pos);
+                this->prop2 = stoi(data.substr(pos+1));
+            }
+            else 
+                throw runtime_error("Invalid data to be deserialized");
+            
+        }
+    };
+
+
+    this->test("Verifying serialization function using reference", []()
+    {
+        MyClass myObject;
+        myObject.prop1 = "aa";
+        myObject.prop2 = 2;
+
+        DynamicVar serializedData;
+        serializedData.setISerializable(myObject);
+
+        return TestResult{
+            result: serializedData.getString() == "aa;2",
+            expected: "aa;2",
+            returned: serializedData
+        };
+    });
+
+    this->test("Verifying serialization function using pointer", []()
+    {
+        auto myObject = new MyClass;
+        myObject->prop1 = "dd";
+        myObject->prop2 = 5;
+
+        DynamicVar serializedData;
+        serializedData.setISerializable(myObject);
+
+        return TestResult{
+            result: serializedData.getString() == "dd;5",
+            expected: "dd;5",
+            returned: serializedData
+        };
+    });
+
+    this->test("Deserialization function", []()
+    {
+        auto myObject = new MyClass;
+        myObject->prop1 = "abc";
+        myObject->prop2 = 12;
+
+        DynamicVar firstDV;
+        firstDV.setISerializable(myObject);
+
+        DynamicVar secondDV;
+        secondDV.setString(firstDV.getString());
+
+        return TestResult{
+            result: secondDV.getString() == "abc;12",
+            expected: "abc;12",
+            returned: secondDV
+        };
+    });
 }

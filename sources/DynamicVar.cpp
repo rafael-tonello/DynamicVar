@@ -45,6 +45,16 @@ DynamicVar::DynamicVar(uint64_t value)
     setUint64(value);
 }
 
+DynamicVar::DynamicVar(DynamicVar::ISerializable* value)
+{
+    setISerializable(value);
+}
+
+DynamicVar::DynamicVar(DynamicVar::ISerializable &value)
+{
+    setISerializable(value);
+}
+
 
 int DynamicVar::getInt(function<void()> onError)
 {
@@ -187,6 +197,30 @@ void DynamicVar::setBool(bool value)
     else
         __data = "0";
 }
+
+void DynamicVar::setISerializable(ISerializable *object)
+{
+    setOriginalType_s(string(typeid(object).name()));
+    __data = object->serialize();
+}
+
+void DynamicVar::setISerializable(ISerializable &object)
+{
+    setISerializable(&object);
+}
+
+DynamicVar::ISerializable* DynamicVar::getISerializable(DynamicVar::ISerializable* object)
+{
+    object->deserialize(this->__data);
+    return object;
+}
+
+DynamicVar::ISerializable* DynamicVar::getISerializable(function<DynamicVar::ISerializable*()> createObjectF)
+{
+    return getISerializable(createObjectF());
+}
+
+
 
 #ifdef JSONMAKER_H
 

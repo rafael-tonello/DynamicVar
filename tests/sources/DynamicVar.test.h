@@ -11,6 +11,8 @@ private:
     void testGets();
     void testSetUsingAttribuitions();
     void testGetUsingAttribuitions();
+    void testPointers();
+    void testeSerializable();
 public:
     vector<string> getContexts();
     void run(string context);

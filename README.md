@@ -1,5 +1,7 @@
 # About DynamicVar
-Dynamic var is a dynamic type for C++. I wrote this to use in some personal projects to facilitate conversions between types in UI and Databases. 
+DynamicVar is a dynamic type for C++ that holds data in an internal std::string object.
+
+I wrote this to use in some personal projects to facilitate conversions between types in UI and Databases. 
 
 This type allows you to set its value as int, double, string, boolean and some others and get its value as well in various types.
 
@@ -22,7 +24,6 @@ void setDouble(double value);
 void setString(string value);
 void setCStr(char* s);
 void setBool(bool value);
-void setJson(JsonMaker::JSON data);
 ```
 
 If you don't want to use the 'JsonMaker::JSON' type, currently you must remove the #include<JSON.h> from the DynamicVar.h header.
@@ -40,7 +41,6 @@ double getDouble(function<void()> onError = [](){});
 string getString();
 bool getBool(function<void()> onError = [](){});
 void setBool(bool value);
-JsonMaker::JSON getJson(function<void()> onError = [](){});
 ```
 
 Excluding the 'getString' function, all other calls to get functions can result in internal conversion errors. For these cases, you can specify an anonymous function to be notified. Also, if an internal error occurs, the function will return a default value (0 for numbers, false for boolean and an empty JSON object for json).
