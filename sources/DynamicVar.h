@@ -141,7 +141,7 @@ public:
     #endif
 
     bool isEquals(DynamicVar* other);
-    bool isEquals(DynamicVar other);
+    bool isEquals(DynamicVar &other);
 
     template<class T>
     operator T*(){ return getPointer<T>(); }

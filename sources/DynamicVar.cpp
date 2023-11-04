@@ -255,7 +255,7 @@ bool DynamicVar::isEquals(DynamicVar* other)
     return other->getString() == this->__data;
 }
 
-bool DynamicVar::isEquals(DynamicVar other)
+bool DynamicVar::isEquals(DynamicVar &other)
 {
     return this->isEquals(&other);
 }
