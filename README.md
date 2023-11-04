@@ -1,7 +1,7 @@
 # About DynamicVar
 DynamicVar is a dynamic type for C++ that holds data in an internal std::string object.
 
-I wrote this to use in some personal projects to facilitate conversions between types in UI and Databases. 
+I wrote this to use in some personal projects to facilitate conversions between types in UI, Databases and other services.
 
 This type allows you to set its value as int, double, string, boolean and some others and get its value as well in various types.
 

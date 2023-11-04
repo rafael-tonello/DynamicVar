@@ -469,6 +469,8 @@ void DynamicVarTests::testGetUsingAttribuitions()
 
 void DynamicVarTests::testPointers()
 {
+    this->blueMessage("Storage of pointers tests");
+
     class MyClass{  
     public:
         string tmp;
@@ -503,6 +505,7 @@ void DynamicVarTests::testPointers()
 
 void DynamicVarTests::testeSerializable()
 {
+    this->blueMessage("ISerializable tests");
     class MyClass: public DynamicVar::ISerializable{  
     public:
         string prop1;
