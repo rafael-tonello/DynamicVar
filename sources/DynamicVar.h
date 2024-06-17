@@ -155,5 +155,65 @@ public:
     operator const char*(){return getString().c_str(); }
     operator signed long long(){ return getInt64(); }
     operator unsigned long long(){ return getUint64(); }
+
+
+    template <typename T>
+    void set(T value){
+        if(typeid(T).name() == originalTypeName){
+            if(typeid(T).name() == typeid(int).name()){
+                setInt(value);
+            }else if(typeid(T).name() == typeid(uint).name()){
+                setUint(value);
+            }else if(typeid(T).name() == typeid(int64_t).name()){
+                setInt64(value);
+            }else if(typeid(T).name() == typeid(uint64_t).name()){
+                setUint64(value);
+            }else if(typeid(T).name() == typeid(double).name()){
+                setDouble(value);
+            }else if(typeid(T).name() == typeid(bool).name()){
+                setBool(value);
+            }else if(typeid(T).name() == typeid(string).name()){
+                setString(value);
+            }else if(typeid(T).name() == typeid(char*).name()){
+                setCStr(value);
+            }else if(typeid(T).name() == typeid(ISerializable).name()){
+                setISerializable(value);
+            }else if(typeid(T).name() == typeid(ISerializable*).name()){
+                setISerializable(value);
+            }else if(typeid(T).name() == typeid(ISerializable&).name()){
+                setISerializable(value);
+            }
+        }
+    }
+
+    template <typename T>
+    T get(function<void()> onError = [](){ }){
+        if(typeid(T).name() == originalTypeName){
+            if(typeid(T).name() == typeid(int).name()){
+                return getInt(onError);
+            }else if(typeid(T).name() == typeid(uint).name()){
+                return getUint(onError);
+            }else if(typeid(T).name() == typeid(int64_t).name()){
+                return getInt64(onError);
+            }else if(typeid(T).name() == typeid(uint64_t).name()){
+                return getUint64(onError);
+            }else if(typeid(T).name() == typeid(double).name()){
+                return getDouble(onError);
+            }else if(typeid(T).name() == typeid(bool).name()){
+                return getBool(onError);
+            }else if(typeid(T).name() == typeid(string).name()){
+                return getString();
+            }else if(typeid(T).name() == typeid(char*).name()){
+                return (T)getString().c_str();
+            }else if(typeid(T).name() == typeid(ISerializable).name()){
+                return getISerializable((ISerializable*)nullptr);
+            }else if(typeid(T).name() == typeid(ISerializable*).name()){
+                return getISerializable((ISerializable*)nullptr);
+            }else if(typeid(T).name() == typeid(ISerializable&).name()){
+                return getISerializable((ISerializable*)nullptr);
+            }
+        }
+        return T();
+    }
 };
 #endif
