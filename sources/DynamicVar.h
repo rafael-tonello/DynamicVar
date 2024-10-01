@@ -152,7 +152,6 @@ public:
     operator uint64_t(){return getUint64(); }
     operator double(){return getDouble();}
     operator bool(){return getBool(); }
-    operator const char*(){return getString().c_str(); }
     operator signed long long(){ return getInt64(); }
     operator unsigned long long(){ return getUint64(); }
 
@@ -174,8 +173,6 @@ public:
                 setBool(value);
             }else if(typeid(T).name() == typeid(string).name()){
                 setString(value);
-            }else if(typeid(T).name() == typeid(char*).name()){
-                setCStr(value);
             }else if(typeid(T).name() == typeid(ISerializable).name()){
                 setISerializable(value);
             }else if(typeid(T).name() == typeid(ISerializable*).name()){
@@ -203,8 +200,6 @@ public:
                 return getBool(onError);
             }else if(typeid(T).name() == typeid(string).name()){
                 return getString();
-            }else if(typeid(T).name() == typeid(char*).name()){
-                return (T)getString().c_str();
             }else if(typeid(T).name() == typeid(ISerializable).name()){
                 return getISerializable((ISerializable*)nullptr);
             }else if(typeid(T).name() == typeid(ISerializable*).name()){
