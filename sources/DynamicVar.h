@@ -5,6 +5,7 @@
 #include <functional>
 #include <string>
 #include <algorithm>
+#include <stdexcept>
 
 //#include <JSON.h>
 
@@ -160,26 +161,28 @@ public:
     void set(T value){
         if(typeid(T).name() == originalTypeName){
             if(typeid(T).name() == typeid(int).name()){
-                setInt(value);
+                int tmp=*((int*)(&value));
+                setInt(tmp);
             }else if(typeid(T).name() == typeid(uint).name()){
-                setUint(value);
+                uint tmp=*((uint*)(&value));
+                setUint(tmp);
             }else if(typeid(T).name() == typeid(int64_t).name()){
-                setInt64(value);
+                int64_t tmp=*((int64_t*)(&value));
+                setInt64(tmp);
             }else if(typeid(T).name() == typeid(uint64_t).name()){
-                setUint64(value);
+                uint64_t tmp=*((uint64_t*)(&value));
+                setUint64(tmp);
             }else if(typeid(T).name() == typeid(double).name()){
-                setDouble(value);
+                double tmp=*((double*)(&value));
+                setDouble(tmp);
             }else if(typeid(T).name() == typeid(bool).name()){
-                setBool(value);
+                bool tmp=*((bool*)(&value));
+                setBool(tmp);
             }else if(typeid(T).name() == typeid(string).name()){
-                setString(value);
-            }else if(typeid(T).name() == typeid(ISerializable).name()){
-                setISerializable(value);
-            }else if(typeid(T).name() == typeid(ISerializable*).name()){
-                setISerializable(value);
-            }else if(typeid(T).name() == typeid(ISerializable&).name()){
-                setISerializable(value);
-            }
+                string tmp=*((string*)(&value));
+                setString(tmp);
+            }else
+                throw runtime_error("Type not supported. Suported types are int, uint, int64_t, uint64_t, double, bool and string");
         }
     }
 
@@ -187,26 +190,28 @@ public:
     T get(function<void()> onError = [](){ }){
         if(typeid(T).name() == originalTypeName){
             if(typeid(T).name() == typeid(int).name()){
-                return getInt(onError);
+                auto tmp = (getInt(onError));
+                return (T)(*((T*)(&tmp)));
             }else if(typeid(T).name() == typeid(uint).name()){
-                return getUint(onError);
+                auto tmp = (getUint(onError));
+                return (T)(*((T*)(&tmp)));
             }else if(typeid(T).name() == typeid(int64_t).name()){
-                return getInt64(onError);
+                auto tmp = (getInt64(onError));
+                return (T)(*((T*)(&tmp)));
             }else if(typeid(T).name() == typeid(uint64_t).name()){
-                return getUint64(onError);
+                auto tmp = (getUint64(onError));
+                return (T)(*((T*)(&tmp)));
             }else if(typeid(T).name() == typeid(double).name()){
-                return getDouble(onError);
+                auto tmp = (getDouble(onError));
+                return (T)(*((T*)(&tmp)));
             }else if(typeid(T).name() == typeid(bool).name()){
-                return getBool(onError);
+                auto tmp = (getBool(onError));
+                return (T)(*((T*)(&tmp)));
             }else if(typeid(T).name() == typeid(string).name()){
-                return getString();
-            }else if(typeid(T).name() == typeid(ISerializable).name()){
-                return getISerializable((ISerializable*)nullptr);
-            }else if(typeid(T).name() == typeid(ISerializable*).name()){
-                return getISerializable((ISerializable*)nullptr);
-            }else if(typeid(T).name() == typeid(ISerializable&).name()){
-                return getISerializable((ISerializable*)nullptr);
-            }
+                auto tmp = (getString());
+                return (T)(*((T*)(&tmp)));
+            }else
+                throw runtime_error("Type not supported. Suported types are int, uint, int64_t, uint64_t, double, bool and string");
         }
         return T();
     }
