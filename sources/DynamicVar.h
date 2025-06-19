@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <stdexcept>
+#include <stdint.h>
 
 //#include <JSON.h>
 
