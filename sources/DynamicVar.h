@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <stdexcept>
+#include <cstdint>
 
 //#include <JSON.h>
 
@@ -95,7 +96,11 @@ public:
 
     bool checkOriginalType_s(string typeid_name){
         return typeid_name == originalTypeName;
-    } 
+    }
+
+    string getOriginalTypeName(){
+        return originalTypeName;
+    }
 
     int getInt(function<void()> onError = [](){});
     void setInt(int value);
@@ -159,61 +164,56 @@ public:
 
     template <typename T>
     void set(T value){
-        if(typeid(T).name() == originalTypeName){
-            if(typeid(T).name() == typeid(int).name()){
-                int tmp=*((int*)(&value));
-                setInt(tmp);
-            }else if(typeid(T).name() == typeid(uint).name()){
-                uint tmp=*((uint*)(&value));
-                setUint(tmp);
-            }else if(typeid(T).name() == typeid(int64_t).name()){
-                int64_t tmp=*((int64_t*)(&value));
-                setInt64(tmp);
-            }else if(typeid(T).name() == typeid(uint64_t).name()){
-                uint64_t tmp=*((uint64_t*)(&value));
-                setUint64(tmp);
-            }else if(typeid(T).name() == typeid(double).name()){
-                double tmp=*((double*)(&value));
-                setDouble(tmp);
-            }else if(typeid(T).name() == typeid(bool).name()){
-                bool tmp=*((bool*)(&value));
-                setBool(tmp);
-            }else if(typeid(T).name() == typeid(string).name()){
-                string tmp=*((string*)(&value));
-                setString(tmp);
-            }else
-                throw runtime_error("Type not supported. Suported types are int, uint, int64_t, uint64_t, double, bool and string");
-        }
+        if(typeid(T).name() == typeid(int).name()){
+            int tmp=*((int*)(&value));
+            setInt(tmp);
+        }else if(typeid(T).name() == typeid(uint).name()){
+            uint tmp=*((uint*)(&value));
+            setUint(tmp);
+        }else if(typeid(T).name() == typeid(int64_t).name()){
+            int64_t tmp=*((int64_t*)(&value));
+            setInt64(tmp);
+        }else if(typeid(T).name() == typeid(uint64_t).name()){
+            uint64_t tmp=*((uint64_t*)(&value));
+            setUint64(tmp);
+        }else if(typeid(T).name() == typeid(double).name()){
+            double tmp=*((double*)(&value));
+            setDouble(tmp);
+        }else if(typeid(T).name() == typeid(bool).name()){
+            bool tmp=*((bool*)(&value));
+            setBool(tmp);
+        }else if(typeid(T).name() == typeid(string).name()){
+            string tmp=*((string*)(&value));
+            setString(tmp);
+        }else
+            throw runtime_error("Type not supported. Suported types are int, uint, int64_t, uint64_t, double, bool and string");
     }
 
     template <typename T>
     T get(function<void()> onError = [](){ }){
-        if(typeid(T).name() == originalTypeName){
-            if(typeid(T).name() == typeid(int).name()){
-                auto tmp = (getInt(onError));
-                return (T)(*((T*)(&tmp)));
-            }else if(typeid(T).name() == typeid(uint).name()){
-                auto tmp = (getUint(onError));
-                return (T)(*((T*)(&tmp)));
-            }else if(typeid(T).name() == typeid(int64_t).name()){
-                auto tmp = (getInt64(onError));
-                return (T)(*((T*)(&tmp)));
-            }else if(typeid(T).name() == typeid(uint64_t).name()){
-                auto tmp = (getUint64(onError));
-                return (T)(*((T*)(&tmp)));
-            }else if(typeid(T).name() == typeid(double).name()){
-                auto tmp = (getDouble(onError));
-                return (T)(*((T*)(&tmp)));
-            }else if(typeid(T).name() == typeid(bool).name()){
-                auto tmp = (getBool(onError));
-                return (T)(*((T*)(&tmp)));
-            }else if(typeid(T).name() == typeid(string).name()){
-                auto tmp = (getString());
-                return (T)(*((T*)(&tmp)));
-            }else
-                throw runtime_error("Type not supported. Suported types are int, uint, int64_t, uint64_t, double, bool and string");
-        }
-        return T();
+        if(typeid(T).name() == typeid(int).name()){
+            auto tmp = (getInt(onError));
+            return (T)(*((T*)(&tmp)));
+        }else if(typeid(T).name() == typeid(uint).name()){
+            auto tmp = (getUint(onError));
+            return (T)(*((T*)(&tmp)));
+        }else if(typeid(T).name() == typeid(int64_t).name()){
+            auto tmp = (getInt64(onError));
+            return (T)(*((T*)(&tmp)));
+        }else if(typeid(T).name() == typeid(uint64_t).name()){
+            auto tmp = (getUint64(onError));
+            return (T)(*((T*)(&tmp)));
+        }else if(typeid(T).name() == typeid(double).name()){
+            auto tmp = (getDouble(onError));
+            return (T)(*((T*)(&tmp)));
+        }else if(typeid(T).name() == typeid(bool).name()){
+            auto tmp = (getBool(onError));
+            return (T)(*((T*)(&tmp)));
+        }else if(typeid(T).name() == typeid(string).name()){
+            auto tmp = (getString());
+            return (T)(*((T*)(&tmp)));
+        }else
+            throw runtime_error("Type not supported. Suported types are int, uint, int64_t, uint64_t, double, bool and string");
     }
 };
 #endif

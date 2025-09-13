@@ -1,17 +1,32 @@
 # About DynamicVar
-DynamicVar is a dynamic type for C++ that holds data in an internal std::string object.
+DynamicVar is a dynamic type for C++ that holds data in an internal std::string object. DynamicVar was created to facilitate conversions between types in UI, Databases and other services. It allow you to set a value as int, double, string, boolean and some others and get its value as well in various types.
 
-I wrote this to use in some personal projects to facilitate conversions between types in UI, Databases and other services.
+DynamicVar contains some useful constructors and functions with overloads to facilitate the use of the class.
 
-This type allows you to set its value as int, double, string, boolean and some others and get its value as well in various types.
+# TL;DR - How to use
+example 1
+```c++
+    #include "DynamicVar.h"
+    
+    int main(){
+        DynamicVar tmp("10");
+        
+        DynamicVar tmp2;
+        tmp2.setInt(5);
 
-The type contains some useful constructors and type overloading helping to use it with your application.
+        DynamicVar tmp3;
+        tmp3.set<int>(5)
+        
+        DynamicVar result = tmp.getInd() + tmp2.getInt() + tmp3.get<int>();
+        cout << "Total sum is " << result.getString() << endl;
+        return 0;
+    }
 
-> Note: Internally, the DynamicVar holds the valus as a std::string.
+```
 
-# Input types
+# Input and output types
 
-Allowed input types for values are 'int', 'int64_t', 'double', 'string', 'bool', 'char const *' and JsonMaker::JSON (see more at http...)
+Allowed input types for values are 'int', 'int64_t', 'double', 'string' and 'bool'
 
 You can set the value by a simple assignment operation ('='), by the costructor or by using the 'set*' methods.
 
@@ -25,10 +40,6 @@ void setString(string value);
 void setCStr(char* s);
 void setBool(bool value);
 ```
-
-If you don't want to use the 'JsonMaker::JSON' type, currently you must remove the #include<JSON.h> from the DynamicVar.h header.
-
-# Output types
 
 You can get the value by a simple assignment operation ('=') or by the 'get*' methods.
 
@@ -45,7 +56,7 @@ void setBool(bool value);
 
 Excluding the 'getString' function, all other calls to get functions can result in internal conversion errors. For these cases, you can specify an anonymous function to be notified. Also, if an internal error occurs, the function will return a default value (0 for numbers, false for boolean and an empty JSON object for json).
 
-# Usage examples 
+# Other usage examples 
 
 ## a simple var
 
